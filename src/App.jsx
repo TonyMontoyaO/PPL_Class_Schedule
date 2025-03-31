@@ -1,42 +1,15 @@
-<<<<<<< HEAD
 import { useState, useRef, useEffect } from "react";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { DndProvider, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import "./App.css";
+import ViewSchedulePage from "./ViewSchedulePage";
+import ClassCard from "./ClassCard";
+import "./homepage/homepage.css";
 
 const ItemTypes = {
   CLASS: "class",
 };
-
-function ClassCard({ className }) {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.CLASS,
-    item: { className },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  }));
-
-  return (
-    <div
-      ref={drag}
-      className="class-card p-2 bg-primary text-white text-center"
-      style={{
-        opacity: isDragging ? 0.5 : 1,
-        cursor: "grab",
-        fontSize: "1rem",
-      }}
-    >
-      {className}
-=======
-import { useState } from 'react';
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
-import ViewSchedulePage from './ViewSchedulePage';
-import ClassCard from './ClassCard';
-import './App.css';
 
 function WeekGrid() {
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri"];
@@ -45,7 +18,6 @@ function WeekGrid() {
   return (
     <div className="container mt-4">
       <div className="week-grid">
-        {/* Grid Header */}
         <div className="grid-header d-flex">
           <div className="hour-label"></div>
           {daysOfWeek.map((day) => (
@@ -55,24 +27,21 @@ function WeekGrid() {
           ))}
         </div>
 
-        {/* Grid Body */}
         <div className="grid-body">
           {hoursOfDay.map((hour) => (
             <div className="grid-row d-flex align-items-center" key={hour}>
               <div className="hour-label text-center">{hour}:00</div>
-              {daysOfWeek.map((day, index) => (
+              {daysOfWeek.map((day) => (
                 <div key={`${hour}-${day}`} className="grid-cell border flex-grow-1"></div>
               ))}
             </div>
           ))}
         </div>
       </div>
->>>>>>> master
     </div>
   );
 }
 
-<<<<<<< HEAD
 function GridCell({ room, time, onDropClass, classInCell }) {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.CLASS,
@@ -83,7 +52,7 @@ function GridCell({ room, time, onDropClass, classInCell }) {
   }));
 
   return (
-    <div ref={drop} className="grid-cell">
+    <div ref={drop} className={`grid-cell ${isOver ? "bg-light" : ""}`}>
       {classInCell && (
         <div className="p-2 bg-success text-white rounded">{classInCell}</div>
       )}
@@ -140,7 +109,6 @@ function ScheduleGrid() {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="schedule-container">
-        {/* Room Headers (Scrolls with Grid Body) */}
         <div className="grid-header-container" ref={headerRef}>
           <div className="grid-header">
             <div className="hour-label">Time</div>
@@ -152,7 +120,6 @@ function ScheduleGrid() {
           </div>
         </div>
 
-        {/* Single Scrollable Grid Body */}
         <div className="scroll-container" ref={scrollContainerRef}>
           <div className="grid-body">
             {timesOfDay.map((time) => (
@@ -172,7 +139,6 @@ function ScheduleGrid() {
           </div>
         </div>
 
-        {/* Class List */}
         <div className="class-list">
           <ClassCard className="Math 101" />
           <ClassCard className="Physics 202" />
@@ -184,17 +150,14 @@ function ScheduleGrid() {
 }
 
 function App() {
-  return <ScheduleGrid />;
-=======
-function App() {
   return (
     <>
       <ViewSchedulePage />
-      <ClassCard />
+      <ClassCard className="Sample Class" />
       <WeekGrid />
+      <ScheduleGrid />
     </>
   );
->>>>>>> master
 }
 
 export default App;
